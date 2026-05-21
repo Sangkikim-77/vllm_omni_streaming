@@ -1,0 +1,25 @@
+# Sample Client HTTPS Configuration
+client:
+  host: "0.0.0.0"
+  port: 9101
+  protocol: "https"
+  cert_path: "certs/cert.pem"
+  key_path: "certs/key.pem"
+
+# WebSocket Client Configuration
+# This is what the browser client will use to connect to the server
+websocket:
+  # For remote server: "wss://<server-ip>:<server-port>/ws/audio"
+  url: "wss://10.233.61.29:9102/ws/audio"
+  sample_rate: 24000
+  buffer_size: 4096
+
+# Audio processing settings
+audio:
+  vad_threshold: 0.05
+  vad_window_size: 3
+  vad_silence_timeout: 7
+  pre_roll_limit: 5
+  max_ws_buffer_bytes: 327680  # ~20 frames
+  sample_rate: 24000
+  buffer_size: 4096

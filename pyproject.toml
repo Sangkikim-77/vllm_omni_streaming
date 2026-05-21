@@ -1,0 +1,20 @@
+[project]
+name = "vllm-omni-streaming"
+version = "0.1.0"
+description = "Unified workspace for vLLM and vLLM-Omni"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "vllm",
+  "vllm-omni",
+]
+
+[tool.uv.sources]
+vllm = { path = "vllm" }
+vllm-omni = { path = "vllm-omni" }
+
+[tool.uv]
+package = false
+
+[build-system]
+requires = ["hatchling>=1.24.0"]
+build-backend = "hatchling.build"

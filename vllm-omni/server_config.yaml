@@ -1,0 +1,12 @@
+model:
+  path: "Qwen/Qwen3-Omni-30B-A3B-Instruct"
+  stage_config_path: "vllm-omni/vllm_omni/entrypoints/lgws/qwen3_omni.yaml"
+
+server:
+  host: "0.0.0.0"
+  port: 9102
+  log_level: "info"
+
+ssl:
+  key_file: "certs/key.pem"
+  cert_file: "certs/cert.pem"

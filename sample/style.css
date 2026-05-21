@@ -1,0 +1,212 @@
+:root {
+  --bg-color: #0a0a0b;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --primary-glow: conic-gradient(from 180deg at 50% 50%, #4285f4, #9b72cb, #d96570, #4285f4);
+  --user-glow: radial-gradient(circle, #00f2fe 0%, #4FACFE 100%);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent-blue: #4285f4;
+  --text-color: #e0e0e0;
+  transition: all 0.5s ease;
+}
+
+body.aircon-mode {
+  --bg-color: #f0faff;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --primary-glow: conic-gradient(from 180deg at 50% 50%, #b3e5fc, #81d4fa, #e1f5fe, #b3e5fc);
+  --user-glow: radial-gradient(circle, #4fc3f7 0%, #0288d1 100%);
+  --border-color: rgba(2, 136, 209, 0.2);
+  --accent-blue: #0288d1;
+  --text-color: #01579b;
+}
+
+body.aircon-mode .bg-glow {
+  opacity: 0.4;
+  background: radial-gradient(circle, #81d4fa, #ffffff);
+}
+
+body.aircon-mode .msg.ai-msg {
+  background: #ffffff;
+  color: #01579b;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.aircon-mode .system-msg {
+  background: rgba(2, 136, 209, 0.1);
+  color: #0288d1;
+}
+
+body.aircon-mode button {
+  background: rgba(2, 136, 209, 0.1);
+  color: #01579b;
+  border: 1px solid rgba(2, 136, 209, 0.3);
+}
+
+body.aircon-mode #start-btn {
+  background: #0288d1;
+  color: white;
+}
+
+body.aircon-mode .ring {
+  opacity: 0.2;
+  border-width: 3px;
+  background: conic-gradient(from 180deg at 50% 50%, #0288d1, #81d4fa, #b3e5fc, #0288d1) border-box;
+}
+
+body.aircon-mode .is-speaking .ring {
+  background: conic-gradient(
+    from 0deg,
+    #00f2fe,
+    #ffffff,
+    #4facfe,
+    #00f2fe
+  ) border-box;
+  animation: spin-glow 1.5s linear infinite;
+  opacity: 1;
+  filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.6));
+}
+
+body.aircon-mode .is-listening .ring {
+  background: var(--user-glow) border-box;
+  box-shadow: 0 0 30px rgba(30, 60, 114, 0.4);
+  opacity: 0.9;
+}
+
+body.aircon-mode .visualizer-container {
+  filter: drop-shadow(0 0 15px rgba(129, 212, 250, 0.6));
+}
+body.aircon-mode .welcome-msg {
+  color: #0288d1;
+  font-weight: 500;
+}
+
+.theme-switch-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+  font-size: 0.7rem;
+  color: var(--text-color);
+  background: var(--card-bg);
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(5px);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 18px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #444;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px; width: 12px;
+  left: 3px; bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider { background-color: var(--accent-blue); }
+input:checked + .slider:before { transform: translateX(16px); }
+
+body {
+  font-family: 'Pretendard', sans-serif;
+  background-color: var(--bg-color);
+  color: #e0e0e0; margin: 0;
+  display: flex; flex-direction: column; align-items: center;
+  height: 100vh; overflow: hidden;
+}
+
+.bg-glow {
+  position: absolute; width: 600px; height: 600px;
+  background: var(--primary-glow); filter: blur(120px);
+  opacity: 0.1; z-index: -1; top: 20%;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+#status {
+  font-size: 0.75rem; padding: 6px 14px; border-radius: 20px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  margin-top: 20px; backdrop-filter: blur(10px); text-transform: uppercase;
+}
+
+.visualizer-container {
+  position: relative;
+  width: 160px; height: 160px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin: 30px 0;
+}
+
+.ring {
+  position: absolute; inset: 0;
+  border-radius: 50%; border: 2px solid transparent;
+  background: var(--primary-glow) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out; mask-composite: exclude;
+  opacity: 0.1; transition: all 0.4s ease;
+}
+
+.is-listening .ring {
+  background: var(--user-glow) border-box;
+  animation: pulse 1s infinite alternate;
+  opacity: 0.8; transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+}
+
+.is-speaking .ring {
+  background: var(--primary-glow) border-box;
+  animation: spin-glow 2s linear infinite;
+  opacity: 1; transform: scale(1.15);
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.5; }
+  to { transform: scale(1.1); opacity: 0.9; }
+}
+@keyframes spin-glow { from { transform: rotate(0deg) scale(1.15); } to { transform: rotate(360deg) scale(1.15); } }
+
+#chat-display {
+  width: 90%; max-width: 700px; flex-grow: 1;
+  padding: 24px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.welcome-msg {
+  align-self: center; text-align: center;
+  color: #aaa; margin-top: 20px; font-size: 1.1rem;
+}
+
+.msg { max-width: 85%; padding: 12px 18px; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; }
+.user-msg { align-self: flex-end; background: var(--accent-blue); color: white; border-bottom-right-radius: 4px; }
+.ai-msg { align-self: flex-start; background: rgba(255, 255, 255, 0.07); color: #efefef; border-bottom-left-radius: 4px; }
+
+.system-msg { align-self: center; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px; }
+.interrupt-msg { align-self: center; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; border: 1px solid; }
+.interrupt-success { color: #4285f4; border-color: #4285f4; }
+.interrupt-attempt { color: #ffb22b; border-color: #ffb22b; }
+
+.controls { padding: 20px; display: flex; gap: 15px; }
+button { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: white; padding: 10px 24px; border-radius: 14px; cursor: pointer; }
+#start-btn { background: var(--accent-blue); border: none; }

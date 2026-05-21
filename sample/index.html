@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qwen3-Omni Realtime Duplex Chat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <span>ICE MODE</span>
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div class="bg-glow"></div>
+    <div id="status">READY</div>
+    <div class="visualizer-container" id="visual-hub">
+        <div class="ring"></div>
+        <div style="font-size: 3rem;">🎙️</div>
+    </div>
+    <div id="chat-display">
+        <div class="welcome-msg">Hello, how can I help you?</div>
+    </div>
+    <div class="controls">
+        <button id="start-btn">Start Chat</button>
+        <button id="stop-btn" disabled>Stop</button>
+    </div>
+    <div id="vol-meter" style="font-size: 0.7rem; color: #888;">VOL: 0</div>
+
+    <script src="runtime-config.js"></script>
+    <script>console.log(CLIENT_CONFIG)</script>
+    <script src="app.js"></script>
+</body>
+</html>

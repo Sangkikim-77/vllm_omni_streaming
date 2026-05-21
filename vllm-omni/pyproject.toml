@@ -1,0 +1,172 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vllm-omni"
+version = "0.12.0rc1"
+description = "A framework for efficient model inference with omni-modality models"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "vLLM-Omni Team"}
+]
+keywords = ["vllm", "multimodal", "diffusion", "transformer", "inference", "serving"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+
+dependencies = [
+    # Core runtime dependencies (required for actual usage)
+    "omegaconf>=2.3.0",
+    "librosa>=0.11.0",
+    "resampy>=0.4.3",
+    "diffusers>=0.36.0",
+    "accelerate==1.12.0",
+    "gradio==5.50",
+    "soundfile>=0.13.1",
+    "cache-dit==1.1.8",
+    "tqdm>=4.66.0",
+    # "vllm==0.12.0",  # TODO: fix the entrypoints overwrite problem
+]
+
+[project.optional-dependencies]
+
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "mypy==1.11.1",
+    "pre-commit==4.0.1",
+]
+
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-api-autonav",
+    "mkdocs-material",
+    "mkdocstrings-python",
+    "mkdocs-gen-files",
+    "mkdocs-awesome-nav",
+    "mkdocs-glightbox",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-minify-plugin",
+    "regex",
+    "ruff",
+    "pydantic",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/vllm-project/vllm-omni"
+Repository = "https://github.com/vllm-project/vllm-omni"
+Documentation = "https://vllm-omni.readthedocs.io"
+"Bug Tracker" = "https://github.com/vllm-project/vllm-omni/issues"
+
+[project.scripts]
+vllm = "vllm_omni.entrypoints.cli.main:main"
+vllm-omni = "vllm_omni.entrypoints.cli.main:main"
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vllm_omni*"]
+
+[tool.setuptools.package-data]
+"vllm_omni.model_executor.stage_configs" = ["*.yaml"]
+"vllm_omni.entrypoints.lgws" = ["*.yaml"]
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    "build",
+    "dist",
+    "vllm_omni.egg-info",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort (handled separately, but included for compatibility)
+    "N",  # pep8-naming
+    "UP", # pyupgrade
+]
+ignore = [
+    "E203",  # whitespace before ':' (conflicts with black)
+    # W503 is not needed in ruff as it's compatible with black by default
+    "N801",  # class names should use CapWords convention
+    "N802",  # function name should follow snake_case
+    "N806",  # variable in function should follow snake_case
+    "N812",  # lowercase imported as non-lowercase: functional as F
+]
+
+[tool.ruff.lint.per-file-ignores]
+"examples/**" = ["E501"]  # Allow long lines in examples
+"tests/**" = ["E501"]  # Allow long lines in tests
+
+[tool.mypy]
+python_version = "3.12, 3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=vllm_omni",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "benchmark: Benchmark tests",
+    "slow: Slow tests",
+    "core_model: enable this model test in each PR instead of only nightly",
+]
+
+[tool.typos.default]
+extend-ignore-identifiers-re = [
+    ".*_thw",
+    ".*thw",
+    "ein",
+    ".*arange",
+    ".*MoBA",
+    ".*temperal_downsample",
+    ".*nothink.*",
+    ".*NOTHINK.*",
+    ".*nin.*",
+]

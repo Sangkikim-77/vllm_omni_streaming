@@ -1,0 +1,7 @@
+# TLS certificates and private keys (never commit)
+certs/*.pem
+certs/*.key
+certs/*.crt
+
+# Keep directory structure only
+!certs/.gitkeep
